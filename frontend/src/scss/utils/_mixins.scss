@@ -1,0 +1,26 @@
+@mixin ellipsis($lines: 1) {
+    @if ($lines ==1) {
+        max-width: 100%;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+
+    @else {
+        display: block;
+        display: -webkit-box;
+        text-overflow: ellipsis;
+        -webkit-line-clamp: $lines;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+}
+
+@mixin blind {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    clip: rect(0, 0, 0, 0);
+    overflow: hidden;
+}

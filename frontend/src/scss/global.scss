@@ -1,0 +1,25 @@
+@charset "utf-8";
+
+@use "common/reset";
+@use "utils/mixins";
+
+:root {
+    --color-blue-100: #e9eeff;
+    --color-blue-200: #bfc9ff;
+    --color-blue-600: #5061ff;
+
+    --color-gray-100: #5061ff;
+    --color-gray-200: #c3c3c3;
+    --color-gray-600: #888;
+
+    --color-white: #fff;
+    --color-black: #000;
+}
+
+#root {
+    height: 100%;
+}
+
+.blind {
+    @include mixins.blind;
+}
