@@ -1,3 +1,39 @@
 .bottom-navigation {
     flex: 0 0 auto;
 }
+
+.tab-list {
+    display: flex;
+    justify-content: center;
+}
+
+.tab-item {
+    flex: 1 1 auto;
+    text-align: center;
+    background-color: var(--color-white);
+
+    &[aria-current='page'] {
+        .tab-link {
+            color: var(--color-blue-600);
+        }
+    }
+}
+
+.tab-link {
+    display: block;
+    padding: 8px;
+    font-size: 12px;
+    color: var(--color-gray-600);
+    line-height: 17px;
+
+    &:active {
+        background-color: rgba(#000, 0.02);
+    }
+
+    svg {
+        display: block;
+        width: 28px;
+        height: 28px;
+        margin: 0 auto;
+    }
+}

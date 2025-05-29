@@ -7,7 +7,11 @@ import svgr from 'vite-plugin-svgr';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 export default defineConfig({
-  plugins: [react(), svgr()],
+  plugins: [react(), svgr({
+     svgrOptions: {
+        icon: true,
+      },
+  })],
   resolve: {
     alias: {
       '@': resolve(__dirname, 'src'),
