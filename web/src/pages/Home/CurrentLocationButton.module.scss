@@ -1,0 +1,19 @@
+.button-current {
+    position: absolute;
+    left: 17px;
+    left: calc(env(safe-area-inset-left) + 17px);
+    bottom: 11px;
+    border-radius: 50%;
+    padding: 6px;
+    background-color: var(--color-white);
+    box-shadow: 0 0 10px 0 rgba(#000, 0.25);
+    color: var(--color-blue-600);
+    z-index: 10;
+
+    svg {
+        display: inline-block;
+        width: 24px;
+        height: 24px;
+        vertical-align: top;
+    }
+}
