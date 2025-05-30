@@ -3,7 +3,7 @@ import { useIsWebView } from '@/hooks/useIsWebView';
 import Location from '@/assets/icons/Location.svg?react';
 import { NAVER_MAPS } from '@/constants/naverMaps';
 
-import type { MapRef } from '@/types/naverMap';
+import type { MapOutletContextType } from '@/types/naverMap';
 
 import classNames from 'classnames/bind';
 import styles from './CurrentLocationButton.module.scss';
@@ -11,7 +11,7 @@ import styles from './CurrentLocationButton.module.scss';
 const cx = classNames.bind(styles);
 
 export const CurrentLocationButton: React.FC = () => {
-  const mapRef = useOutletContext<MapRef>();
+  const { mapRef } = useOutletContext<MapOutletContextType>();
   const isWebView = useIsWebView();
 
   const handleCurrentLocation = () => {

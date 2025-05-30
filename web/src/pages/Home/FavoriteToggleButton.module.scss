@@ -1,0 +1,39 @@
+.toggle-favorite {
+    position: absolute;
+    top: 11px;
+    right: 7px;
+    right: calc(env(safe-area-inset-left) + 13px);
+    padding: 6px;
+    line-height: 1px;
+    cursor: pointer;
+    z-index: 10;
+
+    &[aria-checked='true'] {
+        svg {
+            rect {
+                fill: var(--color-blue-600);
+            }
+        }
+    }
+
+    &[aria-disabled='true'] {
+        opacity: 0.4;
+        pointer-events: none;
+        cursor: default;
+    }
+
+    svg {
+        display: inline-block;
+        width: 30px;
+        height: 30px;
+        vertical-align: top;
+
+        rect {
+            fill: var(--color-gray-600);
+        }
+
+        path {
+            fill: var(--color-white);
+        }
+    }
+}
