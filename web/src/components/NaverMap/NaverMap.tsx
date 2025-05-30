@@ -1,5 +1,5 @@
 import { useNaverMap } from '@/hooks/useNaverMap';
-import type { NaverMapOptions } from '@/types/naverMap';
+import type { MapRef, NaverMapOptions } from '@/types/naverMap';
 
 import classNames from 'classnames/bind';
 import styles from './NaverMap.module.scss';
@@ -7,7 +7,7 @@ import styles from './NaverMap.module.scss';
 const cx = classNames.bind(styles);
 
 interface NaverMapProps {
-  mapRef: React.RefObject<naver.maps.Map | null>;
+  mapRef: MapRef;
   options: NaverMapOptions;
 }
 

@@ -1,14 +1,16 @@
 import { useEffect, useRef } from 'react';
 import { loadNaverMapsScript } from '@/lib/naverMaps';
-import type { NaverMapOptions } from '@/types/naverMap';
+import type { MapRef, NaverMapOptions } from '@/types/naverMap';
+import { useIsWebView } from '@/hooks/useIsWebView';
 
 interface useNaverMapProp {
-  mapRef: React.RefObject<naver.maps.Map | null>;
+  mapRef: MapRef;
   options: NaverMapOptions;
 }
 
 export const useNaverMap = ({ mapRef, options }: useNaverMapProp) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const isWebView = useIsWebView();
 
   useEffect(() => {
     const initializeMap = async () => {
@@ -21,6 +23,13 @@ export const useNaverMap = ({ mapRef, options }: useNaverMapProp) => {
           ...restOptions,
           center: center && new naver.maps.LatLng(center.lat, center.lng),
         });
+
+        if (isWebView) {
+          window.ReactNativeWebView?.postMessage(JSON.stringify({
+            type: 'NAVER_MAP_LOADED',
+            payload: { ready: true, timestamp: Date.now() }
+          }));
+        }
       } catch (error) {
         console.error(error);
       }
@@ -31,7 +40,7 @@ export const useNaverMap = ({ mapRef, options }: useNaverMapProp) => {
     return () => {
       mapRef.current = null;
     };
-  }, [options, mapRef]);
+  }, [mapRef, options, isWebView]);
 
   return containerRef;
 };

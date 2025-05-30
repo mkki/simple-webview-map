@@ -7,7 +7,7 @@ import * as Location from 'expo-location';
 export default function Index() {
   const webviewRef = useRef<WebView>(null);
 
-  const sendLocationToWebView = async () => {
+  const sendLocationToWeb = async () => {
     const { status } = await Location.requestForegroundPermissionsAsync();
     if (status !== 'granted') {
       alert('위치권한을 허용해주세요.');
@@ -35,10 +35,10 @@ export default function Index() {
       switch (message.type) {
         case 'NAVER_MAP_LOADED':
           console.log('Naver Map is ready');
-          sendLocationToWebView();
+          sendLocationToWeb();
           break;
           case 'GET_CURRENT_LOCATION':
-          sendLocationToWebView();
+          sendLocationToWeb();
           break;
         default:
           break;

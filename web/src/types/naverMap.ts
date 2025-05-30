@@ -6,3 +6,5 @@ export interface NaverMapCenter {
 export interface NaverMapOptions extends Omit<naver.maps.MapOptions, 'center'> {
   center?: NaverMapCenter;
 }
+
+export type MapRef = React.RefObject<naver.maps.Map | null>;
