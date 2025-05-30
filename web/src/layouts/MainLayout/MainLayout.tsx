@@ -50,21 +50,6 @@ export const MainLayout: React.FC = () => {
   return (
     <div className={cx('wrapper')}>
       <main className={cx('main')}>
-        <span
-          style={{
-            position: 'absolute',
-            top: '40px',
-            zIndex: 100,
-            backgroundColor: 'white',
-            padding: '4px',
-          }}
-        >
-          즐겨찾기:{' '}
-          {favoritePlaces.map((place) => place.address).join('\n') || '없음'}
-        </span>
-        <span style={{ position: 'absolute', zIndex: 100 }}>
-          {currentMarker ? '마커 있음' : '마커 없음'}
-        </span>
         <NaverMap
           mapRef={mapRef}
           options={mapOptions}
