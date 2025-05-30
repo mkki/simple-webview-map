@@ -23,4 +23,6 @@ export interface MapOutletContextType {
   currentMarker: MarkerInfo | null;
   favoritePlaces: MarkerInfo[];
   setFavoritePlaces: React.Dispatch<React.SetStateAction<MarkerInfo[]>>;
+  showFavoritePlaces: boolean;
+  toggleShowFavoritePlaces: () => void;
 }
