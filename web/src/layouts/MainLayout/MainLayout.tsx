@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useIsWebView } from '@/hooks/useIsWebView';
-import { useToggle } from '@/hooks/useToggle';
 import { Outlet } from 'react-router-dom';
 import { NaverMap } from '@/components/NaverMap/NaverMap';
 import { BottomNavigation } from '@/components/BottomNavigation/BottomNavigation';
@@ -18,7 +17,7 @@ export const MainLayout: React.FC = () => {
   const mapRef = useRef<naver.maps.Map | null>(null);
   const [favoritePlaces, setFavoritePlaces] = useState<MarkerInfo[]>([]);
   const [currentMarker, setCurrentMarker] = useState<MarkerInfo | null>(null);
-  const [showFavoritePlaces, toggleShowFavoritePlaces] = useToggle(false);
+  const [showFavoritePlaces, setShowFavoritePlaces] = useState<boolean>(false);
   const isWebView = useIsWebView();
 
   const mapOptions = useMemo(() => ({ zoom: 15 }), []);
@@ -64,7 +63,7 @@ export const MainLayout: React.FC = () => {
             favoritePlaces,
             setFavoritePlaces,
             showFavoritePlaces,
-            toggleShowFavoritePlaces,
+            setShowFavoritePlaces,
           }}
         />
       </main>

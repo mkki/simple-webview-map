@@ -9,11 +9,11 @@ import styles from './FavoritePlaceToggleButton.module.scss';
 const cx = classNames.bind(styles);
 
 export const FavoritePlaceToggleButton = () => {
-  const { showFavoritePlaces, toggleShowFavoritePlaces } =
+  const { showFavoritePlaces, setShowFavoritePlaces } =
     useOutletContext<MapOutletContextType>();
 
   const handleClick = () => {
-    toggleShowFavoritePlaces();
+    setShowFavoritePlaces((prev) => !prev);
   };
 
   return (
