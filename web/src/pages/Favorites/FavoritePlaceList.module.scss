@@ -1,0 +1,49 @@
+@use "@/scss/utils/mixins";
+
+.favorite-place-list {
+}
+
+.favorite-place {
+    &-item {
+        display: flex;
+        align-items: center;
+
+        & + & {
+            border-top: 1px solid var(--color-blue-200);
+        }
+    }
+
+    &-address {
+        flex: 1 1 auto;
+        padding: 9px 0;
+        min-width: 0;
+        border: 0;
+        background-color: transparent;
+        font-size: 14px;
+        color: var(--color-black);
+        line-height: 20px;
+        text-align: left;
+
+        @include mixins.ellipsis;
+    }
+}
+
+.button-delete {
+    padding: 4px;
+    border: 0;
+    border-radius: 50%;
+    background-color: var(--color-gray-200);
+    line-height: 1px;
+
+    svg {
+        display: inline-block;
+        width: 14px;
+        height: 14px;
+        vertical-align: top;
+
+        path {
+            fill: var(--color-white);
+        }
+    }
+}
+

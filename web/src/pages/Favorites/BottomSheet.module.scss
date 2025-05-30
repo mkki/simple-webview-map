@@ -1,0 +1,24 @@
+.bottom-sheet-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 100;
+    overflow: hidden;
+}
+
+.bottom-sheet {
+    box-sizing: border-box;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 70%;
+    padding: 36px 24px;
+    padding-left: calc(env(safe-area-inset-left) + 24px);
+    padding-right: calc(env(safe-area-inset-right) + 24px);
+    border-radius: 40px 40px 0 0;
+    background-color: var(--color-white);
+    z-index: 10;
+}
