@@ -1,28 +1,25 @@
-import { loadNaverMapsScript } from '@/lib/naverMaps';
 import { useEffect, useRef } from 'react';
+import { loadNaverMapsScript } from '@/lib/naverMaps';
+import type { NaverMapOptions } from '@/types/naverMap';
 
-interface MapOptions {
-  center?: { lat: number; lng: number };
-  zoom?: number;
+interface useNaverMapProp {
+  mapRef: React.RefObject<naver.maps.Map | null>;
+  options: NaverMapOptions;
 }
 
-export const useNaverMap = (containerId: string, options: MapOptions) => {
-  const mapRef = useRef<naver.maps.Map | null>(null);
+export const useNaverMap = ({ mapRef, options }: useNaverMapProp) => {
+  const containerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const initializeMap = async () => {
+      if (!containerRef.current || mapRef.current) return;
+
       try {
         await loadNaverMapsScript();
-
-        if (mapRef.current) {
-          return;
-        }
-
-        mapRef.current = new naver.maps.Map(containerId, {
-          center: options?.center
-            ? new naver.maps.LatLng(options.center.lat, options.center.lng)
-            : new naver.maps.LatLng(37.5665, 126.978),
-          zoom: options?.zoom ?? 14,
+        const { center, ...restOptions } = options;
+        mapRef.current = new naver.maps.Map(containerRef.current, {
+          ...restOptions,
+          center: center && new naver.maps.LatLng(center.lat, center.lng),
         });
       } catch (error) {
         console.error(error);
@@ -30,7 +27,11 @@ export const useNaverMap = (containerId: string, options: MapOptions) => {
     };
 
     initializeMap();
-  }, [containerId, options]);
 
-  return mapRef;
+    return () => {
+      mapRef.current = null;
+    };
+  }, [options, mapRef]);
+
+  return containerRef;
 };
