@@ -30,6 +30,9 @@ export const FavoriteToggleButton: React.FC = () => {
       console.log('Adding to favorites');
     }
 
+    /**
+     * POST/DELETE 요청으로 구현 필요
+     */
     setFavoritePlaces((prev) => {
       if (isCurrentPlaceFavorite) {
         return prev.filter((place) => place.id !== currentMarker.id);
