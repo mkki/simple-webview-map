@@ -104,8 +104,7 @@ export const useNaverMap = ({
         if (isWebView) {
           window.ReactNativeWebView?.postMessage(
             JSON.stringify({
-              type: 'NAVER_MAP_LOADED',
-              payload: { ready: true, timestamp: Date.now() },
+              type: 'GET_CURRENT_LOCATION',
             })
           );
         }

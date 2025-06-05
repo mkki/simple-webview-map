@@ -33,11 +33,7 @@ export default function Index() {
       console.log('Message received from web:', message);
 
       switch (message.type) {
-        case 'NAVER_MAP_LOADED':
-          console.log('Naver Map is ready');
-          sendLocationToWeb();
-          break;
-          case 'GET_CURRENT_LOCATION':
+        case 'GET_CURRENT_LOCATION':
           sendLocationToWeb();
           break;
         default:
@@ -52,7 +48,7 @@ export default function Index() {
     <View style={styles.container}>
       <WebView
         ref={webviewRef}
-        source={{ uri: 'http://169.254.157.72:5173/' }}
+        source={{ uri: 'http://169.254.141.58:5173/' }}
         originWhitelist={['*']}
         javaScriptEnabled={true}
         onMessage={handleWebMessage}
