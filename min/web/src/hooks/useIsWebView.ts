@@ -1,4 +1,1 @@
-import { useMemo } from 'react';
-
-export const useIsWebView = () =>
-  useMemo(() => typeof window?.ReactNativeWebView !== 'undefined', []);
+export const useIsWebView = () => typeof window?.ReactNativeWebView !== 'undefined';
