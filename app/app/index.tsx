@@ -1,8 +1,8 @@
 import { useRef } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { WebView } from 'react-native-webview';
-
 import * as Location from 'expo-location';
+import { getWebUrl } from '@/constants/env';
 
 export default function Index() {
   const webviewRef = useRef<WebView>(null);
@@ -48,7 +48,7 @@ export default function Index() {
     <View style={styles.container}>
       <WebView
         ref={webviewRef}
-        source={{ uri: 'http://169.254.141.58:5173/' }}
+        source={{ uri: getWebUrl() }}
         originWhitelist={['*']}
         javaScriptEnabled={true}
         onMessage={handleWebMessage}
