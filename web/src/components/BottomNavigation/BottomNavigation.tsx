@@ -2,8 +2,8 @@ import { v4 as uuidv4 } from 'uuid';
 import { Link, useLocation } from 'react-router-dom';
 import { PAGE_PATHS } from '@/constants/pagePaths';
 
-import Home from '@/assets/icons/home.svg?react';
-import Star from '@/assets/icons/star.svg?react';
+import Home from '@/assets/icons/Home.svg?react';
+import Star from '@/assets/icons/Star.svg?react';
 
 import classNames from 'classnames/bind';
 import styles from './BottomNavigation.module.scss';
