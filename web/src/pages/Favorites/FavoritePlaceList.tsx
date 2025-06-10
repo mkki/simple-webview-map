@@ -21,7 +21,7 @@ export const FavoritePlaceList: React.FC = () => {
         mapRef.current.setCenter(
           new naver.maps.LatLng(firstPlace.coord.lat, firstPlace.coord.lng)
         );
-        mapRef.current.zoomBy(15);
+        mapRef.current.setZoom(15);
         const panOffset =
           Number(FavoritePlaceListRef.current?.getBoundingClientRect().top) ||
           0;
@@ -29,8 +29,11 @@ export const FavoritePlaceList: React.FC = () => {
         mapRef.current.panBy(new naver.maps.Point(0, panOffset));
       }
     }
+  }, [mapRef, favoritePlaces]);
+
+  useEffect(() => {
     setShowFavoritePlaces(true);
-  }, [mapRef, favoritePlaces, setShowFavoritePlaces]);
+  }, [setShowFavoritePlaces]);
 
   const handleClick = useCallback(
     (id: string) => {
