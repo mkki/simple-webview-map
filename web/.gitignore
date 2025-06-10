@@ -23,5 +23,8 @@ dist-ssr
 *.sln
 *.sw?
 
+# TypeScript build cache
+tsconfig.tsbuildinfo
+
 # dotenv environment variable files
 .env
