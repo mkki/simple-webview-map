@@ -8,6 +8,7 @@ import type { MarkerInfo } from '@/types/naverMap';
 
 import classNames from 'classnames/bind';
 import styles from './MainLayout.module.scss';
+import { api } from '@/api/client';
 
 const cx = classNames.bind(styles);
 
@@ -38,19 +39,16 @@ export const MainLayout: React.FC = () => {
   }, [isWebView]);
 
   useEffect(() => {
-    fetch('/api/favorites')
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Failed to fetch favorites');
-        }
-        return response.json();
-      })
-      .then((data) => {
+    const fetchFavoritePlaces = async () => {
+      try {
+        const data = await api.get<MarkerInfo[]>('/favorites');
         setFavoritePlaces(data);
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error('Error fetching favorites:', error);
-      });
+      }
+    }
+
+    fetchFavoritePlaces();
   }, []);
 
   return (
