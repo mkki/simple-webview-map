@@ -4,7 +4,7 @@
     "paths": {
       "@/*": ["src/*"]
     },
-    "target": "es2020",
+    "target": "ES2022",
     "module": "ESNext",
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "useDefineForClassFields": true,

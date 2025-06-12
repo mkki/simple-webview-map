@@ -15,6 +15,14 @@ export default defineConfig({
       },
     }),
   ],
+  build: {
+    target: 'ES2022',
+    rollupOptions: {
+      output: {
+        format: 'es',
+      },
+    },
+  },
   resolve: {
     alias: {
       '@': resolve(__dirname, 'src'),
