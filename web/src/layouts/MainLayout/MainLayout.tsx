@@ -6,8 +6,6 @@ import { BottomNavigation } from '@/components/BottomNavigation/BottomNavigation
 import { handleWebViewMessage } from '@/lib/webViewMessage';
 import type { MarkerInfo } from '@/types/naverMap';
 
-import { MOCK_FAVORITE_PLACE_LIST } from '@/api/mockAPI';
-
 import classNames from 'classnames/bind';
 import styles from './MainLayout.module.scss';
 
@@ -40,10 +38,19 @@ export const MainLayout: React.FC = () => {
   }, [isWebView]);
 
   useEffect(() => {
-    /**
-     * GET 요청으로 구현 필요
-     */
-    setFavoritePlaces(MOCK_FAVORITE_PLACE_LIST);
+    fetch('/api/favorites')
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Failed to fetch favorites');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setFavoritePlaces(data);
+      })
+      .catch((error) => {
+        console.error('Error fetching favorites:', error);
+      });
   }, []);
 
   return (
