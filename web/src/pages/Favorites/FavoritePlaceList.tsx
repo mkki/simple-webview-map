@@ -1,6 +1,7 @@
-import { useCallback, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import Trash from '@/assets/icons/Trash.svg?react';
+import { api } from '@/api/client';
 
 import type { MapOutletContextType } from '@/types/naverMap';
 
@@ -35,17 +36,14 @@ export const FavoritePlaceList: React.FC = () => {
     setShowFavoritePlaces(true);
   }, [setShowFavoritePlaces]);
 
-  const handleClick = useCallback(
-    (id: string) => {
-      /**
-       * DELETE 요청으로 구현 필요
-       */
-      setFavoritePlaces((prev) => {
-        return prev.filter((place) => place.id !== id);
-      });
-    },
-    [setFavoritePlaces]
-  );
+  const handleDelete = async (id: string) => {
+    try {
+      await api.delete(`/favorites/${id}`);
+      setFavoritePlaces((previous) => previous.filter((place) => place.id !== id));
+    } catch (error) {
+      console.error('Failed to delete favorite:', error);
+    }
+  };
 
   return (
     <ul ref={FavoritePlaceListRef} className={cx('favorite-place-list')}>
@@ -57,7 +55,7 @@ export const FavoritePlaceList: React.FC = () => {
           <button
             type="button"
             className={cx('button-delete')}
-            onClick={() => favoritePlace.id && handleClick(favoritePlace.id)}
+            onClick={() => favoritePlace.id && handleDelete(favoritePlace.id)}
           >
             <Trash aria-hidden="true" />
             <span className="blind">삭제</span>
