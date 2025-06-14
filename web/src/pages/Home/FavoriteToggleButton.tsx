@@ -1,7 +1,8 @@
-import { useCallback, useMemo } from 'react';
+import { useMemo } from 'react';
 import { useOutletContext } from 'react-router-dom';
+import { api } from '@/api/client';
 import RoundStar from '@/assets/icons/RoundStar.svg?react';
-import type { MapOutletContextType } from '@/types/naverMap';
+import type { MapOutletContextType, MarkerInfo } from '@/types/naverMap';
 
 import classNames from 'classnames/bind';
 import styles from './FavoriteToggleButton.module.scss';
@@ -20,27 +21,29 @@ export const FavoriteToggleButton: React.FC = () => {
     [currentMarker, favoritePlaces]
   );
 
-  const handleClick = useCallback(() => {
+  const handleToggleFavorite = async () => {
     if (!currentMarker) return;
 
-    console.log('Toggle favorite places:', currentMarker);
-    if (isCurrentPlaceFavorite) {
-      console.log('Removing from favorites');
-    } else {
-      console.log('Adding to favorites');
-    }
-
-    /**
-     * POST/DELETE 요청으로 구현 필요
-     */
-    setFavoritePlaces((prev) => {
+    try {
       if (isCurrentPlaceFavorite) {
-        return prev.filter((place) => place.id !== currentMarker.id);
+        console.log('Removing from favorites');
+        await api.delete(`/favorites/${currentMarker.id}`);
+        setFavoritePlaces((previous) =>
+          previous.filter((place) => place.id !== currentMarker.id)
+        );
       } else {
-        return [...prev, currentMarker];
+        console.log('Adding to favorites');
+        const newFavorite: MarkerInfo = await api.post('/favorites', {
+          id: currentMarker.id,
+          coord: currentMarker.coord,
+          address: currentMarker.address,
+        });
+        setFavoritePlaces((previous) => [...previous, newFavorite]);
       }
-    });
-  }, [currentMarker, setFavoritePlaces, isCurrentPlaceFavorite]);
+    } catch (error) {
+      console.error('Failed to toggle favorite:', error);
+    }
+  };
 
   return (
     <span
@@ -50,7 +53,7 @@ export const FavoriteToggleButton: React.FC = () => {
         'is-disabled': !currentMarker,
       })}
       tabIndex={currentMarker ? 0 : -1}
-      onClick={handleClick}
+      onClick={handleToggleFavorite}
       aria-disabled={!currentMarker}
       aria-checked={isCurrentPlaceFavorite}
     >
