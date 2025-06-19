@@ -15,7 +15,7 @@ export interface MarkerInfo {
     lng: number;
   };
   address?: string;
-  id?: string;
+  id: string;
 }
 
 export interface MapOutletContextType {
