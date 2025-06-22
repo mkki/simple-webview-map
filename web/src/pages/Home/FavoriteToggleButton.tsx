@@ -25,20 +25,22 @@ export const FavoriteToggleButton: React.FC = () => {
 
   const isCurrentPlaceFavorite = useMemo(
     () =>
-      currentMarker
-        ? favoritePlaces.some((place) => place.id === currentMarker.id)
+      currentMarker && currentMarker.address
+        ? favoritePlaces.some(
+            (place) => place.address === currentMarker.address
+          )
         : false,
     [currentMarker, favoritePlaces]
   );
 
   const handleToggleFavorite = async () => {
-    if (!currentMarker) return;
+    if (!currentMarker || !currentMarker.address) return;
 
     try {
       if (isCurrentPlaceFavorite) {
         console.log('Removing from favorites');
-        await api.delete(`/favorites/${currentMarker.id}`);
-        removeFavoritePlace(currentMarker.id);
+        await api.delete(`/favorites/${currentMarker.address}`);
+        removeFavoritePlace(currentMarker.address);
       } else {
         console.log('Adding to favorites');
         const newFavorite: MarkerInfo = await api.post('/favorites', {

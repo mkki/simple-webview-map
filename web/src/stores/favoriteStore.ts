@@ -22,9 +22,11 @@ export const useFavoriteStore = create<FavoriteState>()((set) => ({
       favoritePlaces: [...state.favoritePlaces, place],
     })),
 
-  removeFavoritePlace: (id) =>
+  removeFavoritePlace: (address) =>
     set((state) => ({
-      favoritePlaces: state.favoritePlaces.filter((place) => place.id !== id),
+      favoritePlaces: state.favoritePlaces.filter(
+        (place) => place.address !== address
+      ),
     })),
 
   toggleShowFavoritePlaces: () =>

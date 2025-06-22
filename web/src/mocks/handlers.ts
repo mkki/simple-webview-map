@@ -40,10 +40,12 @@ export const handlers = [
       );
     }
   }),
-  http.delete('/api/favorites/:id', ({ params }) => {
-    const { id } = params;
+  http.delete('/api/favorites/:address', ({ params }) => {
+    const { address } = params;
 
-    const favoriteToDelete = favorites.find((favorite) => favorite.id === id);
+    const favoriteToDelete = favorites.find(
+      (favorite) => favorite.address === address
+    );
 
     if (!favoriteToDelete) {
       return HttpResponse.json(
@@ -53,7 +55,7 @@ export const handlers = [
     }
 
     const filteredFavorites = favorites.filter(
-      (favorite) => favorite.id !== id
+      (favorite) => favorite.address !== address
     );
 
     favorites.splice(0, favorites.length, ...filteredFavorites);
