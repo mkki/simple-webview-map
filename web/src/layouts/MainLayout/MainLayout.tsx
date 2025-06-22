@@ -1,22 +1,17 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { useIsWebView } from '@/hooks/useIsWebView';
 import { Outlet } from 'react-router-dom';
 import { NaverMap } from '@/components/NaverMap/NaverMap';
 import { BottomNavigation } from '@/components/BottomNavigation/BottomNavigation';
 import { handleWebViewMessage } from '@/lib/webViewMessage';
-import type { MarkerInfo } from '@/types/naverMap';
 
 import classNames from 'classnames/bind';
 import styles from './MainLayout.module.scss';
-import { api } from '@/api/client';
 
 const cx = classNames.bind(styles);
 
 export const MainLayout: React.FC = () => {
   const mapRef = useRef<naver.maps.Map | null>(null);
-  const [favoritePlaces, setFavoritePlaces] = useState<MarkerInfo[]>([]);
-  const [currentMarker, setCurrentMarker] = useState<MarkerInfo | null>(null);
-  const [showFavoritePlaces, setShowFavoritePlaces] = useState<boolean>(false);
   const isWebView = useIsWebView();
 
   const mapOptions = useMemo(() => ({ zoom: 15 }), []);
@@ -38,37 +33,13 @@ export const MainLayout: React.FC = () => {
     };
   }, [isWebView]);
 
-  useEffect(() => {
-    const fetchFavoritePlaces = async () => {
-      try {
-        const data = await api.get<MarkerInfo[]>('/favorites');
-        setFavoritePlaces(data);
-      } catch (error) {
-        console.error('Error fetching favorites:', error);
-      }
-    }
-
-    fetchFavoritePlaces();
-  }, []);
-
   return (
     <div className={cx('wrapper')}>
       <main className={cx('main')}>
-        <NaverMap
-          mapRef={mapRef}
-          options={mapOptions}
-          favoritePlaces={favoritePlaces}
-          showFavoritePlaces={showFavoritePlaces}
-          onAddMarker={setCurrentMarker}
-        />
+        <NaverMap mapRef={mapRef} options={mapOptions} />
         <Outlet
           context={{
             mapRef,
-            currentMarker,
-            favoritePlaces,
-            setFavoritePlaces,
-            showFavoritePlaces,
-            setShowFavoritePlaces,
           }}
         />
       </main>

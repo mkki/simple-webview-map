@@ -1,8 +1,10 @@
 import { useMemo } from 'react';
-import { useOutletContext } from 'react-router-dom';
-import { api } from '@/api/client';
 import RoundStar from '@/assets/icons/RoundStar.svg?react';
-import type { MapOutletContextType, MarkerInfo } from '@/types/naverMap';
+import { useMapStore } from '@/stores/mapStore';
+import { useFavoriteStore } from '@/stores/favoriteStore';
+import { useShallow } from 'zustand/react/shallow';
+import { api } from '@/api/client';
+import type { MarkerInfo } from '@/types/naverMap';
 
 import classNames from 'classnames/bind';
 import styles from './FavoriteToggleButton.module.scss';
@@ -10,8 +12,16 @@ import styles from './FavoriteToggleButton.module.scss';
 const cx = classNames.bind(styles);
 
 export const FavoriteToggleButton: React.FC = () => {
-  const { currentMarker, favoritePlaces, setFavoritePlaces } =
-    useOutletContext<MapOutletContextType>();
+  const currentMarker = useMapStore((state) => state.currentMarker);
+
+  const { favoritePlaces, addFavoritePlace, removeFavoritePlace } =
+    useFavoriteStore(
+      useShallow((state) => ({
+        favoritePlaces: state.favoritePlaces,
+        addFavoritePlace: state.addFavoritePlace,
+        removeFavoritePlace: state.removeFavoritePlace,
+      }))
+    );
 
   const isCurrentPlaceFavorite = useMemo(
     () =>
@@ -28,9 +38,7 @@ export const FavoriteToggleButton: React.FC = () => {
       if (isCurrentPlaceFavorite) {
         console.log('Removing from favorites');
         await api.delete(`/favorites/${currentMarker.id}`);
-        setFavoritePlaces((previous) =>
-          previous.filter((place) => place.id !== currentMarker.id)
-        );
+        removeFavoritePlace(currentMarker.id);
       } else {
         console.log('Adding to favorites');
         const newFavorite: MarkerInfo = await api.post('/favorites', {
@@ -38,7 +46,7 @@ export const FavoriteToggleButton: React.FC = () => {
           coord: currentMarker.coord,
           address: currentMarker.address,
         });
-        setFavoritePlaces((previous) => [...previous, newFavorite]);
+        addFavoritePlace(newFavorite);
       }
     } catch (error) {
       console.error('Failed to toggle favorite:', error);

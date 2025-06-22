@@ -1,7 +1,5 @@
 import RoundStar from '@/assets/icons/RoundStar.svg?react';
-import { useOutletContext } from 'react-router-dom';
-
-import type { MapOutletContextType } from '@/types/naverMap';
+import { useFavoriteStore } from '@/stores/favoriteStore';
 
 import classNames from 'classnames/bind';
 import styles from './FavoritePlaceToggleButton.module.scss';
@@ -9,11 +7,11 @@ import styles from './FavoritePlaceToggleButton.module.scss';
 const cx = classNames.bind(styles);
 
 export const FavoritePlaceToggleButton = () => {
-  const { showFavoritePlaces, setShowFavoritePlaces } =
-    useOutletContext<MapOutletContextType>();
+  const showFavoritePlaces = useFavoriteStore((state) => state.showFavoritePlaces);
+  const toggleShowFavoritePlaces = useFavoriteStore((state) => state.toggleShowFavoritePlaces);
 
   const handleClick = () => {
-    setShowFavoritePlaces((prev) => !prev);
+    toggleShowFavoritePlaces();
   };
 
   return (

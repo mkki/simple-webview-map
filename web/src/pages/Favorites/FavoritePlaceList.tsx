@@ -1,6 +1,8 @@
 import { useEffect, useRef } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import Trash from '@/assets/icons/Trash.svg?react';
+import { useFavoriteStore } from '@/stores/favoriteStore';
+import { useShallow } from 'zustand/react/shallow';
 import { api } from '@/api/client';
 
 import type { MapOutletContextType } from '@/types/naverMap';
@@ -11,8 +13,16 @@ import classNames from 'classnames/bind';
 const cx = classNames.bind(styles);
 
 export const FavoritePlaceList: React.FC = () => {
-  const { mapRef, setShowFavoritePlaces, favoritePlaces, setFavoritePlaces } =
-    useOutletContext<MapOutletContextType>();
+  const { mapRef } = useOutletContext<MapOutletContextType>();
+
+  const { favoritePlaces, removeFavoritePlace, setShowFavoritePlaces } =
+    useFavoriteStore(
+      useShallow((state) => ({
+        favoritePlaces: state.favoritePlaces,
+        removeFavoritePlace: state.removeFavoritePlace,
+        setShowFavoritePlaces: state.setShowFavoritePlaces,
+      }))
+    );
   const FavoritePlaceListRef = useRef<HTMLUListElement | null>(null);
 
   useEffect(() => {
@@ -39,7 +49,7 @@ export const FavoritePlaceList: React.FC = () => {
   const handleDelete = async (id: string) => {
     try {
       await api.delete(`/favorites/${id}`);
-      setFavoritePlaces((previous) => previous.filter((place) => place.id !== id));
+      removeFavoritePlace(id);
     } catch (error) {
       console.error('Failed to delete favorite:', error);
     }

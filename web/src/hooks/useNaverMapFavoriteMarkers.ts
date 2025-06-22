@@ -1,20 +1,24 @@
 import { useEffect, useRef } from 'react';
+import { useShallow } from 'zustand/react/shallow';
+import { useFavoriteStore } from '@/stores/favoriteStore';
 
-import type { MapRef, MarkerInfo } from '@/types/naverMap';
+import type { MapRef } from '@/types/naverMap';
+import { useMapStore } from '@/stores/mapStore';
 
 interface useNaverMapFavoriteMarkersProps {
   mapRef: MapRef;
-  isMapInitialized: boolean;
-  favoritePlaces: MarkerInfo[];
-  showFavoritePlaces: boolean;
 }
 
 export const useNaverMapFavoriteMarkers = ({
   mapRef,
-  isMapInitialized,
-  favoritePlaces,
-  showFavoritePlaces,
 }: useNaverMapFavoriteMarkersProps) => {
+  const { favoritePlaces, showFavoritePlaces } = useFavoriteStore(
+    useShallow((state) => ({
+      favoritePlaces: state.favoritePlaces,
+      showFavoritePlaces: state.showFavoritePlaces,
+    }))
+  );
+  const isMapInitialized = useMapStore((state) => state.isMapInitialized);
   const favoriteMarkersRef = useRef<Map<string, naver.maps.Marker>>(new Map());
   const showFavoritePlacesRef = useRef(showFavoritePlaces);
 
