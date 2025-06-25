@@ -1,0 +1,9 @@
+import"./iframe-BWl6VmQ2.js";var l={exports:{}},r={};/**
+ * @license React
+ * react-jsx-runtime.production.js
+ *
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */var d;function p(){if(d)return r;d=1;var n=Symbol.for("react.transitional.element"),a=Symbol.for("react.fragment");function o(s,e,t){var i=null;if(t!==void 0&&(i=""+t),e.key!==void 0&&(i=""+e.key),"key"in e){t={};for(var u in e)u!=="key"&&(t[u]=e[u])}else t=e;return e=t.ref,{$$typeof:n,type:s,key:i,ref:e!==void 0?e:null,props:t}}return r.Fragment=a,r.jsx=o,r.jsxs=o,r}var m;function c(){return m||(m=1,l.exports=p()),l.exports}var f=c();const v=({primary:n=!1,size:a="medium",backgroundColor:o,label:s,...e})=>{const t=n?"storybook-button--primary":"storybook-button--secondary";return f.jsx("button",{type:"button",className:["storybook-button",`storybook-button--${a}`,t].join(" "),style:{backgroundColor:o},...e,children:s})};v.__docgenInfo={description:"Primary UI component for user interaction",methods:[],displayName:"Button",props:{primary:{required:!1,tsType:{name:"boolean"},description:"Is this the principal call to action on the page?",defaultValue:{value:"false",computed:!1}},backgroundColor:{required:!1,tsType:{name:"string"},description:"What background color to use"},size:{required:!1,tsType:{name:"union",raw:"'small' | 'medium' | 'large'",elements:[{name:"literal",value:"'small'"},{name:"literal",value:"'medium'"},{name:"literal",value:"'large'"}]},description:"How large should the button be?",defaultValue:{value:"'medium'",computed:!1}},label:{required:!0,tsType:{name:"string"},description:"Button contents"},onClick:{required:!1,tsType:{name:"signature",type:"function",raw:"() => void",signature:{arguments:[],return:{name:"void"}}},description:"Optional click handler"}}};export{v as B,f as j};
